@@ -1,0 +1,46 @@
+﻿@using System.Web.Optimization
+@using EPiServer.Framework.Web.Mvc.Html
+@model IPageViewModel<SitePageData>
+<!DOCTYPE html>
+<html lang="@Model.CurrentPage.LanguageBranch">
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=10" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@Model.CurrentPage.MetaTitle</title>
+        @Styles.Render("~/bundles/css")
+        @Scripts.Render("~/bundles/js")
+        @Html.RequiredClientResources("Header") @*Enable components to require resources. For an example, see the view for VideoBlock.*@
+        <!--[if lt IE 9]>
+            <link rel="stylesheet" href="css/ie.css" type="text/css" media="all">
+            <script src="scripts/ie/css3-mediaqueries.min.js"></script>
+            <script src="scripts/ie/ie9.js"></script>
+            <script src="scripts/ie/html5shiv.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+<body>
+    @Html.RenderEPiServerQuickNavigator()
+    @Html.FullRefreshPropertiesMetaData()
+
+    @if (!Model.Layout.HideHeader)
+    {
+        Html.RenderPartial("Header", Model);
+    }
+        <div class="wrapper mainBody">
+            <div id="container">
+                @RenderBody()
+            </div>
+        </div>
+    
+        @if (!Model.Layout.HideHeader)
+        {
+            Html.RenderPartial("Footer", Model);
+        }
+
+        @Html.RequiredClientResources("Footer")
+</body>
+</html>
